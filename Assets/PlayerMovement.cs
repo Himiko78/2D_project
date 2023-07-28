@@ -7,37 +7,58 @@ public class PlayerMovement : MonoBehaviour
     // bool jumpInput = (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W));  one way of doing movement command
 
     // Update is called once per frame
+
+    Rigidbody2D _playerRB;
+    bool isJumpInput = false;
+
+    void Start()
+    {
+        _playerRB = GetComponent<Rigidbody2D>();
+    }
+
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
         {
-            Rigidbody2D playerRB = GetComponent<Rigidbody2D>();
+            isJumpInput = true;
 
-            playerRB.AddForce(Vector2.up * 200f);
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+    void FixedUpdate()
+    {
+        
         {
-            Rigidbody2D playerRB = GetComponent<Rigidbody2D>();
+        
+            if (isJumpInput)
+            {
+                _playerRB.AddForce(Vector2.up * 200f);
+                isJumpInput=false;
+            }
+;
+        }
 
-            playerRB.AddForce(Vector2.right * 100f);
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
 
+            _playerRB.AddForce(Vector2.right * 300f * Time.deltaTime);
 
         }
 
-
-        // Debug.Log(jumpInput);
+        // Debug.Log(jumpInput); if there is no down on getkey then you don thave to tap it to move it will auto move when the key is held
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            Rigidbody2D playerRB = GetComponent<Rigidbody2D>();
 
-            playerRB.AddForce(Vector2.left * 1f);
-
+            _playerRB.AddForce(Vector2.left * 300f * Time.deltaTime);
 
         }
 
 
-
     }
+
+
+
+
 }
